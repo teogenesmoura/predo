@@ -18,7 +18,7 @@ def get_day_from_datetime(date):
     return date.days
 
 def mount_result(diff):
-    day = diff.days
+    day = get_day_from_datetime(diff)
     hours, remainder = divmod(diff.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
     result = str(day) + ' dia(s)\n'
@@ -32,11 +32,5 @@ def precifica_casamento(inicio, final):
     final = parse_datetime(final)
     diff = final - inicio
     if(not is_timedelta_valid(diff)):
-        return "Data invalida!"
-    return mount_result(diff)
-
-
-if __name__ == '__main__':
-    print(precifica_casamento("5 08:12:23", "9 06:13:23"))
-    print(precifica_casamento("1 2:2:2", "2 2:2:2"))
-    print(precifica_casamento("8 08:58:14", "8 08:58:12"))
+        print("Data invalida!")
+    print(mount_result(diff))
