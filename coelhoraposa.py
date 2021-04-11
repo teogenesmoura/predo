@@ -31,12 +31,12 @@ def is_fuga_possivel(lista_buracos, coelho_coord, raposa_coord):
     target = calc_target(coelho_coord, lista_buracos)
     dist_coelho_target = dist_dois_pontos(coelho_coord, target)
     dist_raposa_target = dist_dois_pontos(raposa_coord, target)
-    print('target')
-    print(target)
-    print('dist_coelho_target')
-    print(dist_coelho_target)
-    print('dist_raposa_target')
-    print(dist_raposa_target)
+    # print('target')
+    # print(target)
+    # print('dist_coelho_target')
+    # print(dist_coelho_target)
+    # print('dist_raposa_target')
+    # print(dist_raposa_target)
     if(dist_coelho_target > (dist_raposa_target * 2)):
         print(COELHO_GANHOU + str(target) + '.')
     else:
@@ -60,8 +60,3 @@ def recebe_input():
     is_fuga_possivel(lista_buracos, coelho_coord, raposa_coord)
 
 recebe_input()
-
-#1
-#1.000 1.000
-#2.000 2.000
-#1.500 1.500
