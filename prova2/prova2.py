@@ -61,10 +61,12 @@ class FilaDeWookies:
             result.append(wookie.get_carga())
         return result
 
+    def start_check_list(self):
+        return [False]*self.numero_wookies
+
     def place_cargas_in_wookies(self):
         w_counter = 0 #wookie counter
-        check_list = []
-        check_list = [False]*self.numero_wookies
+        check_list = self.start_check_list()
         carga_atual = self.desempilha_carga()
         while(self.lista_cargas):
             check_list[w_counter] = True
@@ -87,16 +89,15 @@ class FilaDeWookies:
                 carga_atual = self.desempilha_carga()
             # se nenhum dos casos se aplicar, coloca carga na lista de sobras
             elif all(check_list) == True:
-                
                 self.sobras.append(carga_atual)
                 carga_atual = self.desempilha_carga()
+                check_list = self.start_check_list()
+                w_counter += 1
             #atualiza iteração dos wookies
             if w_counter < self.numero_wookies-1:
                 w_counter += 1
             else:
                 w_counter = 0
-            #breakpoint()
-            
         return self.get_cargas_por_wookie()
 
 
