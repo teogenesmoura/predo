@@ -63,8 +63,9 @@ class FilaDeWookies:
 
     def place_cargas_in_wookies(self):
         w_counter = 0 #wookie counter
+        carga_atual = self.desempilha_carga()
+
         while(self.lista_cargas):
-            carga_atual = self.desempilha_carga()
             curr_wookie = self.wookies[w_counter] #
             # se o wookie estiver sem carga, entrega para ele
             if not curr_wookie.topo():
@@ -74,10 +75,11 @@ class FilaDeWookies:
                 free_wookie = get_first_wookie_without_load()
                 free_wookie.empilha_carga(carga_atual)
             # se nenhum wookie estiver sem carga, verifica se carga atual é menor que topo da pilha do woookie atual
-            elif carga_atual < curr_wookie.topo():
+            elif carga_atual <= curr_wookie.topo():
                 curr_wookie.empilha_carga(carga_atual)
             # se nenhum dos casos se aplicar, coloca carga na lista de sobras
             else:
+                carga_atual = self.desempilha_carga()
                 self.sobras.append(carga_atual)
             #atualiza iteração dos wookies
             if w_counter < self.numero_wookies-1:
