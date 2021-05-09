@@ -63,30 +63,40 @@ class FilaDeWookies:
 
     def place_cargas_in_wookies(self):
         w_counter = 0 #wookie counter
+        check_list = []
+        check_list = [False]*self.numero_wookies
         carga_atual = self.desempilha_carga()
-
         while(self.lista_cargas):
+            check_list[w_counter] = True
             curr_wookie = self.wookies[w_counter] #
             # se o wookie estiver sem carga, entrega para ele
             if not curr_wookie.topo():
-                curr_wookie.empilha_carga(carga_atual) # [Wookie0<4>, Wookie1<4>, Wookie2<1>]
+                curr_wookie.empilha_carga(int(carga_atual)) # [Wookie0<4>, Wookie1<4>, Wookie2<1>]
+                check_list[w_counter] = False
+                carga_atual = self.desempilha_carga()
             # se ele ja tiver carga, verifica se há algum wookie sem carga
             elif self.wookie_without_load():
                 free_wookie = get_first_wookie_without_load()
-                free_wookie.empilha_carga(carga_atual)
-            # se nenhum wookie estiver sem carga, verifica se carga atual é menor que topo da pilha do woookie atual
-            elif carga_atual <= curr_wookie.topo():
-                curr_wookie.empilha_carga(carga_atual)
-            # se nenhum dos casos se aplicar, coloca carga na lista de sobras
-            else:
+                free_wookie.empilha_carga(int(carga_atual))
+                check_list[w_counter] = False
                 carga_atual = self.desempilha_carga()
+            # se nenhum wookie estiver sem carga, verifica se carga atual é menor que topo da pilha do woookie atual
+            elif int(carga_atual) <= int(curr_wookie.topo()):
+                curr_wookie.empilha_carga(int(carga_atual))
+                check_list[w_counter] = False
+                carga_atual = self.desempilha_carga()
+            # se nenhum dos casos se aplicar, coloca carga na lista de sobras
+            elif all(check_list) == True:
+                
                 self.sobras.append(carga_atual)
+                carga_atual = self.desempilha_carga()
             #atualiza iteração dos wookies
             if w_counter < self.numero_wookies-1:
                 w_counter += 1
             else:
                 w_counter = 0
-            breakpoint()
+            #breakpoint()
+            
         return self.get_cargas_por_wookie()
 
 
