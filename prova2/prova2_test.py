@@ -41,12 +41,12 @@ class TestFilaDeWookies(unittest.TestCase):
     def test_correctly_distribute_load_among_wookies_example_3(self):
         fila_de_wookies = FilaDeWookies('4', '7 8 9 10')
         carga_por_wookie = fila_de_wookies.place_cargas_in_wookies()
-        self.assertEqual(carga_por_wookie, [[10], [9], [8], [7]])
+        self.assertEqual(carga_por_wookie, [[7], [8], [9], [10]])
 
     def test_correctly_distribute_load_among_wookies_example_4(self):
         fila_de_wookies = FilaDeWookies('10', '1 2 3')
         carga_por_wookie = fila_de_wookies.place_cargas_in_wookies()
-        self.assertEqual(carga_por_wookie, [[3], [2], [1], [],  [],  [],  [],  [],  [],  []])
+        self.assertEqual(carga_por_wookie, [[1], [2], [3], [],  [],  [],  [],  [],  [],  []])
 
 if __name__ == '__main__':
     unittest.main()

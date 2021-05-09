@@ -41,6 +41,9 @@ class FilaDeWookies:
 
     def desempilha_carga(self):
         return self.lista_cargas.pop(0)
+    
+    def verifica_inicio_lista(self):
+        return self.lista_cargas[0]
 
     def get_lista_de_wookies(self):
         return self.wookies
@@ -67,7 +70,7 @@ class FilaDeWookies:
     def place_cargas_in_wookies(self):
         w_counter = 0 #wookie counter
         check_list = self.start_check_list()
-        carga_atual = self.desempilha_carga()
+        carga_atual = self.verifica_inicio_lista()
         while(self.lista_cargas):
             check_list[w_counter] = True
             curr_wookie = self.wookies[w_counter] #
@@ -75,22 +78,30 @@ class FilaDeWookies:
             if not curr_wookie.topo():
                 curr_wookie.empilha_carga(int(carga_atual)) # [Wookie0<4>, Wookie1<4>, Wookie2<1>]
                 check_list[w_counter] = False
-                carga_atual = self.desempilha_carga()
+                self.desempilha_carga()
+                if self.lista_cargas:
+                    carga_atual = self.verifica_inicio_lista()
             # se ele ja tiver carga, verifica se há algum wookie sem carga
             elif self.wookie_without_load():
                 free_wookie = get_first_wookie_without_load()
                 free_wookie.empilha_carga(int(carga_atual))
                 check_list[w_counter] = False
-                carga_atual = self.desempilha_carga()
+                self.desempilha_carga()
+                if self.lista_cargas:
+                    carga_atual = self.verifica_inicio_lista()
             # se nenhum wookie estiver sem carga, verifica se carga atual é menor que topo da pilha do woookie atual
             elif int(carga_atual) <= int(curr_wookie.topo()):
                 curr_wookie.empilha_carga(int(carga_atual))
                 check_list[w_counter] = False
-                carga_atual = self.desempilha_carga()
+                self.desempilha_carga()
+                if self.lista_cargas:
+                    carga_atual = self.verifica_inicio_lista()
             # se nenhum dos casos se aplicar, coloca carga na lista de sobras
             elif all(check_list) == True:
                 self.sobras.append(carga_atual)
-                carga_atual = self.desempilha_carga()
+                self.desempilha_carga()
+                if self.lista_cargas:
+                    carga_atual = self.verifica_inicio_lista()
                 check_list = self.start_check_list()
                 w_counter += 1
             #atualiza iteração dos wookies
@@ -98,6 +109,7 @@ class FilaDeWookies:
                 w_counter += 1
             else:
                 w_counter = 0
+        
         return self.get_cargas_por_wookie()
 
 
