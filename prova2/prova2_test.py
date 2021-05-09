@@ -31,7 +31,7 @@ class TestFilaDeWookies(unittest.TestCase):
     def test_correctly_distribute_load_among_wookies(self):
         fila_de_wookies = FilaDeWookies('3', '4 5 1 2 4 2 3 7 8 9')
         carga_por_wookie = fila_de_wookies.place_cargas_in_wookies()
-        self.assertEqual(carga_por_wookie, "[[5,4,3],[4,2,2],[1]]")
+        self.assertEqual(carga_por_wookie, [[4, 2, 2], [5, 4, 3], [1]])
 
 if __name__ == '__main__':
     unittest.main()
